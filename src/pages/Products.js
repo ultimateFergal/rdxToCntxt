@@ -1,14 +1,44 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
+import ShopContext from '../context/shop-context'
 import MainNavigation from '../components/MainNavigation';
-import { addProductToCart } from '../store/actions';
+// import { addProductToCart } from '../store/actions';
 import './Products.css';
 
 class ProductsPage extends Component {
   render() {
     return (
-      <React.Fragment>
+      <ShopContext>
+        {context => (
+          <React.Fragment>
+            <MainNavigation 
+              cartItemNumber={context.cart.reduce((count, curItem) => {
+                return count + curItem.quantity;
+              }, 0)} />
+            <main className="products">
+              <ul>
+                {context.products.map(product => (
+                  <li key={product.id}>
+                    <div>
+                      <strong>{product.title}</strong> - ${product.price}
+                    </div>
+                    <div>
+                      <button
+                        onClick={context.addProductToCart.bind(this, product)}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </main>
+          </React.Fragment>
+        )}
+
+      </ShopContext>
+/*      <React.Fragment>
         <MainNavigation cartItemNumber={this.props.cartItemCount} />
         <main className="products">
           <ul>
@@ -28,12 +58,12 @@ class ProductsPage extends Component {
             ))}
           </ul>
         </main>
-      </React.Fragment>
+      </React.Fragment> */
     );
   }
 }
 
-const mapStateToProps = state => {
+/* const mapStateToProps = state => {
   console.log(state, 'state fdo')
   return {
     products: state.products,
@@ -54,4 +84,6 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProductsPage);
+)(ProductsPage); */
+
+export default ProductsPage
