@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import ShopContext from './shop-context'
 
-class GlobalState extends Component {
-
-    state = {
+// class GlobalState extends Component {
+const GlobalState = (props) => {
+/*     state = {
         products: [
             { id: 'p1', title: 'Gaming Mouse', price: 29.99 },
             { id: 'p2', title: 'Harry Potter 3', price: 9.99 },
@@ -12,11 +12,19 @@ class GlobalState extends Component {
             { id: 'p4', title: 'Half-dried plant', price: 2.99 }
         ],
         cart: []
-    }
+    } */
+    
+    const products = [
+        { id: 'p1', title: 'Gaming Mouse', price: 29.99 },
+        { id: 'p2', title: 'Harry Potter 3', price: 9.99 },
+        { id: 'p3', title: 'Used plastic bottle', price: 0.99 },
+        { id: 'p4', title: 'Half-dried plant', price: 2.99 }
+    ]
+    const [cart, setCart] = useState([])
 
-    addproductToCart = product => {
+    const addProductToCart = product => {
         console.log('Adding product', product)
-        const updatedCart = [...this.state.cart];
+        const updatedCart = [...cart];
         const updatedItemIndex = updatedCart.findIndex(
             item => item.id === product.id
         );
@@ -32,13 +40,13 @@ class GlobalState extends Component {
         }
         
         setTimeout(() => {
-            this.setState({cart: updatedCart})
+            setCart(updatedCart)
         }, 700)
     }
 
-    removeProductFromCart = productId => {
+    const removeProductFromCart = productId => {
         console.log('Removing product with id: ', productId)
-        const updatedCart = [...this.state.cart];
+        const updatedCart = [...cart];
         const updatedItemIndex = updatedCart.findIndex(
             item => item.id === productId
         );
@@ -54,23 +62,23 @@ class GlobalState extends Component {
         }
 
         setTimeout(() => {
-            this.setState({cart: updatedCart})
+            setCart(updatedCart)
         }, 700)
     }
 
-    render() {
+    // render() {
         return (
             <ShopContext.Provider 
                 value={{
-                products: this.state.products,
-                cart: this.state.cart,
-                addProductToCart: this.addproductToCart,
-                removeProductFromCart: this.removeProductFromCart
+                products,
+                cart,
+                addProductToCart,
+                removeProductFromCart
             }}>
-                {this.props.children}
+                {props.children}
             </ShopContext.Provider>
         )
-    }
+    // }
 }
 
 export default GlobalState;
