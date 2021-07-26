@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React/* , { Component } */ from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // import ShopContext from './context/shop-context'
@@ -8,9 +8,9 @@ import CartPage from './pages/Cart';
 import './App.css';
 import GlobalState from './context/GlobalState';
 
-class App extends Component {
-
-  render() {
+// class App extends Component {
+const App = props => {
+  // render() {
     return (
 /*       <ShopContext.Provider 
         value={{
@@ -30,6 +30,5 @@ class App extends Component {
 /*       </ShopContext.Provider> */
     );
   }
-}
 
 export default App;

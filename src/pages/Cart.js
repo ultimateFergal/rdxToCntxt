@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { /* Component */ useContext, useEffect } from 'react';
 // import { connect } from 'react-redux';
 
 import ShopContext from '../context/shop-context'
@@ -6,23 +6,32 @@ import MainNavigation from '../components/MainNavigation';
 // import { removeProductFromCart } from '../store/actions';
 import './Cart.css';
 
-class CartPage extends Component {
-  static contextType = ShopContext; // --> this.context
+// class CartPage extends Component {
+const CartPage = (props) => {  
+/*   static contextType = ShopContext; // --> this.context
 
   componentDidCatch() {
     console.log(this.context) // <---- static contextType = ShopContext; 
-  }
+  } */
 
-  render() {
+  const context = useContext(ShopContext);
+
+  useEffect(() => {
+    console.log(context)
+  }, [])
+
+  
+
+  // render() {
     return (
       <React.Fragment>
-        <MainNavigation cartItemNumber={this.context.cart.reduce((count, curItem) => {
+        <MainNavigation cartItemNumber={context.cart.reduce((count, curItem) => {
           return count + curItem.quantity;
         }, 0)} />
         <main className="cart">
-          {this.context.cart.length <= 0 && <p>No Item in the Cart!</p>}
+          {context.cart.length <= 0 && <p>No Item in the Cart!</p>}
           <ul>
-            {this.context.cart.map(cartItem => (
+            {context.cart.map(cartItem => (
               <li key={cartItem.id}>
                 <div>
                   <strong>{cartItem.title}</strong> - ${cartItem.price} (
@@ -30,7 +39,7 @@ class CartPage extends Component {
                 </div>
                 <div>
                   <button
-                    onClick={this.context.removeProductFromCart.bind(
+                    onClick={context.removeProductFromCart.bind(
                       this,
                       cartItem.id
                     )}
@@ -44,7 +53,7 @@ class CartPage extends Component {
         </main>
       </React.Fragment>
     );
-  }
+  // }
 }
 
 /* const mapStateToProps = state => {
